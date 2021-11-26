@@ -1,5 +1,5 @@
 #!/bin/bash
-for file in category_page_data_*
+for file in /home/garrotero/webscraping/category_page_data_?*.txthref*
 do
 	rm $file
 done
