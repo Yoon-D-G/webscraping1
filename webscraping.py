@@ -1,15 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
 import lxml
+import re
 
 url = 'http://books.toscrape.com/'
 dir = '/home/garrotero/category_page_data/'
 
 def create_file_with_url_content(url, filename):
+    features = "lxml"
     request = requests.get(url)
     content = request.text
     scraping_file = open(dir + filename, 'w')
-    soup = BeautifulSoup(content)
+    soup = BeautifulSoup(content, features)
     soup = str(soup)
     scraping_file.write(soup)
     scraping_file.close()
@@ -63,3 +65,14 @@ os.remove(dir + 'category_page_data_1.txt')
 for filename in os.listdir(dir):
     if 'category_page_data_' in filename and not filename == 'category_page_data_0':
         list_of_hrefs(dir + filename, 'hrefs_' + filename)
+
+list_of_href_matches = []
+for filename in os.listdir('/home/garrotero/category_page_data'):
+    if filename.startswith('hrefs'):
+        opened_href_file = open(dir + filename, 'r')
+        for fileline in opened_href_file.readlines():
+            print(fileline)
+            fileline = str(fileline)
+            match = re.search(pattern='(?<=a href="../../../).*(?=" title)', string=fileline)
+            if match:
+                print(match.group())
