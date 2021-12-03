@@ -60,4 +60,7 @@ for book_url in complete_book_list:
     book_urls_file = open('complete_book_list_urls.txt', 'a')
     book_urls_file.write(book_url + '\n')
 book_urls_file.close()
+
+for book_url in open('complete_book_list_urls.txt', 'r').readlines():
+    print(book_url)
     
